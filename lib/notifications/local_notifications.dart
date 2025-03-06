@@ -44,4 +44,32 @@ class LocalNotificationsService {
             AndroidFlutterLocalNotificationsPlugin>()
         ?.requestNotificationsPermission();
   }
+
+  //show a notification(instant notification)
+  static Future<void> showInstacnceNotification({
+    required String title,
+    required String body,
+  }) async {
+    //define the notification details
+    const NotificationDetails platformChannelSpecification =
+        NotificationDetails(
+      android: AndroidNotificationDetails(
+        "Channel Id",
+        "Channel name",
+        importance: Importance.max,
+        priority: Priority.high,
+      ),
+      iOS: DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+      ),
+    );
+    await _flutterLocalNotificationsPlugin.show(
+      0,
+      title,
+      body,
+      platformChannelSpecification,
+    );
+  }
 }
